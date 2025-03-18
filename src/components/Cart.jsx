@@ -26,6 +26,11 @@ function Cart({ items, setItems }) {
     );
   };
 
+  // Trier les items actifs par ordre alphabétique
+  const sortedActiveItems = [...activeItems].sort((a, b) => 
+    a.name.localeCompare(b.name)
+  );
+
   return (
     <div className="relative w-full text-white">
       <p className="absolute top-2 right-2 cursor-pointer">Fermer</p>
@@ -34,7 +39,7 @@ function Cart({ items, setItems }) {
         {activeItems.length === 0 && <p>Votre panier est vide</p>}
         <p>{totalQuantity} article(s)</p>
         <ul className="space-y-4 mt-4 pl-6">
-          {activeItems.map((item) => (
+          {sortedActiveItems.map((item) => (
             <li key={item.id} className="flex justify-between items-center">
               <Item
                 quantity={item.quantity}

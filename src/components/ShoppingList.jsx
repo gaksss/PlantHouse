@@ -2,21 +2,19 @@ import React from 'react'
 import PlantItem from './PlantItem'
 
 
-function ShoppingList({ items, addQuantity }) {
+function ShoppingList({ items, addQuantity, removeQuantity, updateQuantity }) {
   return (
-    <section className="flex flex-col items-center w-full mt-6">
-      <div className='flex flex-wrap justify-center gap-6'>
-        {items.map((item) => (
-          <PlantItem
-            key={item.id}
-            id={item.id}
-            name={item.name}
-            price={item.price}
-            addQuantity={addQuantity}
-          />
-        ))}
-      </div>
-    </section>
+    <div className="grid grid-cols-3 gap-8 p-8">
+      {items.map((item) => (
+        <PlantItem
+          key={item.id}
+          {...item} // Spread operator pour passer toutes les props
+          addQuantity={addQuantity}
+          removeQuantity={removeQuantity}
+          updateQuantity={updateQuantity}
+        />
+      ))}
+    </div>
   );
 }
 
