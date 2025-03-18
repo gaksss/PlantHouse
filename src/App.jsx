@@ -4,6 +4,7 @@ import Banner from "./components/Banner";
 import Cart from "./components/Cart";
 import Categories from "./components/Categories";
 import ShoppingList from "./components/ShoppingList";
+import Footer from "./components/Footer";
 import dionaea from "./assets/img/dionaea.jpg";
 import ficus from "./assets/img/ficus.webp";
 import cactus from "./assets/img/cactus.webp";
@@ -72,7 +73,7 @@ function App() {
   };
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <header className="flex justify-end items-center h-24 pr-8 border-b-2 border-black">
         <Banner />
       </header>
@@ -96,7 +97,10 @@ function App() {
           />
         </div>
       </section>
-    </>
+      <footer className="flex justify-center items-center h-[280px] bg-[#13ae67]">
+        <Footer />
+      </footer>
+    </div>
   );
 }
 
