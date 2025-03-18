@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 import Item from "./Item";
 
-function Cart() {
-  // Données simulées
-  const [items, setItems] = useState([
-    { id: 1, quantity: 1, name: "Monstera", price: 25 },
-    { id: 2, quantity: 1, name: "Ficus", price: 35 },
-    { id: 3, quantity: 1, name: "Cactus", price: 15 },
-  ]);
-
+function Cart({ items, setItems }) {
   const activeItems = items.filter((item) => item.quantity > 0);
   const total = activeItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -24,6 +17,14 @@ function Cart() {
     console.log("Panier vidé");
     
   }
+
+  const addQuantity = (itemId) => {
+    setItems(
+      items.map((item) =>
+        item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
+  };
 
   return (
     <div className="relative w-full text-white">
