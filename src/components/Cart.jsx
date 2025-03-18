@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Item from "./Item";
 
-function Cart({ items, setItems }) {
+function Cart({ items, setItems, isOpen, setIsOpen }) {
   const activeItems = items.filter((item) => item.quantity > 0);
   const total = activeItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -12,19 +12,9 @@ function Cart({ items, setItems }) {
     0
   );
 
-  function emptyCart(){
-    setItems(items.map((item) => ({...item, quantity: 0})));
-    console.log("Panier vidé");
-    
+  function emptyCart() {
+    setItems(items.map((item) => ({ ...item, quantity: 0 })));
   }
-
-  const addQuantity = (itemId) => {
-    setItems(
-      items.map((item) =>
-        item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item
-      )
-    );
-  };
 
   // Trier les items actifs par ordre alphabétique
   const sortedActiveItems = [...activeItems].sort((a, b) => 
@@ -32,28 +22,54 @@ function Cart({ items, setItems }) {
   );
 
   return (
-    <div className="relative w-full text-white">
-      <p className="absolute top-2 right-2 cursor-pointer">Fermer</p>
-      <div className="justify-start items-start pt-10 pl-6">
-        <h2 className="font-bold text-xl">Panier</h2>
-        {activeItems.length === 0 && <p>Votre panier est vide</p>}
-        <p>{totalQuantity} article(s)</p>
-        <ul className="space-y-4 mt-4 pl-6">
-          {sortedActiveItems.map((item) => (
-            <li key={item.id} className="flex justify-between items-center">
-              <Item
-                quantity={item.quantity}
-                name={item.name}
-                price={item.price}
-              />
-            </li>
-          ))}
-        </ul>
-        <div className="flex justify-between items-center mt-4 pl-6 font-bold text-xl">
-          <span>Total : {total}€</span>
-        </div>
-        <button onClick={emptyCart} className="mt-4">Vider le panier</button>
+    <div 
+      className={`relative w-full text-white transition-all duration-300 ${
+        isOpen ? "h-full" : "h-16 cursor-pointer"
+      }`}
+      onClick={() => !isOpen && setIsOpen(true)}
+    >
+      <div className="flex justify-between items-center h-16 px-6">
+        <h2 className="font-bold text-xl">Panier ({totalQuantity})</h2>
+        <button 
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsOpen(!isOpen);
+          }}
+          className="cursor-pointer"
+        >
+          {isOpen ? "Fermer" : "Ouvrir"}
+        </button>
       </div>
+
+      {isOpen && (
+        <div className="px-6 pb-6">
+          {activeItems.length === 0 && <p>Votre panier est vide</p>}
+          <ul className="space-y-4 mt-4">
+            {sortedActiveItems.map((item) => (
+              <li key={item.id} className="flex justify-between items-center">
+                <Item
+                  quantity={item.quantity}
+                  name={item.name}
+                  price={item.price}
+                />
+              </li>
+            ))}
+          </ul>
+          {activeItems.length > 0 && (
+            <>
+              <div className="flex justify-between items-center mt-4 font-bold text-xl">
+                <span>Total : {total}€</span>
+              </div>
+              <button 
+                onClick={emptyCart}
+                className="mt-4 px-4 py-2 bg-red-500 hover:bg-red-600 rounded-lg transition"
+              >
+                Vider le panier
+              </button>
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 }

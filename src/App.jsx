@@ -44,6 +44,7 @@ function App() {
   ]);
 
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [isOpen, setIsOpen] = useState(true);
 
   const addQuantity = (itemId) => {
     setItems(
@@ -78,8 +79,10 @@ function App() {
         <Banner />
       </header>
       <section className="flex">
-        <div className="bg-[#13ae67] w-[250px] h-[400px] flex rounded-br-xl">
-          <Cart items={items} setItems={setItems} />
+        <div className={`bg-[#13ae67] w-[250px] transition-all duration-300 rounded-br-xl ${
+          isOpen ? "h-[400px]" : "h-16"
+        }`}>
+          <Cart items={items} setItems={setItems} isOpen={isOpen} setIsOpen={setIsOpen} />
         </div>
         <div className="flex- justify-center flex-col items-center w-full">
           <Categories
