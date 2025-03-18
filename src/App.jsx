@@ -78,13 +78,13 @@ function App() {
       <header className="flex justify-end items-center h-24 pr-8 border-b-2 border-black">
         <Banner />
       </header>
-      <section className="flex">
+      <main className="flex flex-1">
         <div className={`bg-[#13ae67] w-[250px] transition-all duration-300 rounded-br-xl ${
           isOpen ? "h-[400px]" : "h-16"
         }`}>
           <Cart items={items} setItems={setItems} isOpen={isOpen} setIsOpen={setIsOpen} />
         </div>
-        <div className="flex- justify-center flex-col items-center w-full">
+        <div className="flex-1 flex flex-col">
           <Categories
             selectedCategory={selectedCategory}
             onSelectCategory={setSelectedCategory}
@@ -99,10 +99,8 @@ function App() {
             updateQuantity={updateQuantity}
           />
         </div>
-      </section>
-      <footer className="flex justify-center items-center h-[280px] bg-[#13ae67]">
-        <Footer />
-      </footer>
+      </main>
+      <Footer />
     </div>
   );
 }
